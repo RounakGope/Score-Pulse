@@ -1,104 +1,73 @@
-🏟️ Digital Stadium – MVP
+# 🏟️ Digital Stadium – MVP
 
-A modern football experience built for fans who want live scores, personalized club hubs, merch discovery, and community chat — all in one unified platform.
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Flutter](https://img.shields.io/badge/Flutter-2.10-blue)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-2.7.5-brightgreen)
 
-🚀 What This App Does (MVP Features)
-⚽ Live Football Scores (Top 5 Leagues)
+**A modern football experience built for fans who want live scores, personalized club hubs, merch discovery, and community chat — all in one unified platform.**
 
-Real-time match updates for:
+---
 
-Premier League
+## 🚀 Features
 
-La Liga
+### ⚽ Live Football Scores (Top 5 Leagues)
+- Real-time updates for Premier League, La Liga, Serie A, Bundesliga, Ligue 1
+- Live scores, match events, standings, and fixtures via football data API
 
-Serie A
+### 🔐 Login + “My Club” Personalization
+- Sign in & pick your favorite club
+- Team news, upcoming fixtures, squad & player info
+- Live score notifications
+- Customized dashboard experience
 
-Bundesliga
+### 🛍️ Merchandise Discovery (Affiliate Model)
+- Browse official club merchandise
+- “Buy” redirects to official stores for affiliate commissions
+- No payments handled inside the app
 
-Ligue 1
+### 💬 Match-Day Chat Rooms
+- Real-time chat for each live match
+- React to goals, discuss tactics, and share emotions
+- Powered by WebSockets for instant interaction
 
-Includes live scores, match events, standings, and fixtures using a football data API.
-🔐 Login + “My Club” Personalization
+### 👥 Club Communities
+- Join your club’s community to share posts and discuss matches
+- Connect with fellow supporters worldwide
 
-After signing in, users can choose their favorite club and instantly get:
+### 📊 Immersive Match Visualizer (No Video Needed)
+- Event timeline, lineups, formations, and basic stats
+- Shot and chance indicators for a dynamic match experience
 
-Team news
+---
 
-Upcoming fixtures
+## 🏗️ Tech Stack
 
-Squad & player info
+| Frontend           | Backend               | External Services                       |
+|--------------------|-----------------------|---------------------------------------|
+| Flutter            | Spring Boot           | API-Football (live match & league data) |
+| Riverpod / Bloc    | JWT Authentication    | Affiliate partners (Fanatics, Amazon, official club stores) |
+| Firebase Notifications | WebSocket STOMP   |                                       |
+| WebSockets (Chat)  | PostgreSQL            |                                       |
+|                    | Redis (optional)      |                                       |
 
-Live score notifications
+---
 
-A customized dashboard
+## 📥 Getting Started
 
-🛍️ Merchandise Discovery (Affiliate Model)
+1. Clone this repository  
+2. Follow platform-specific setup guides for Flutter and Spring Boot
+3. Configure API keys for football data provider and affiliate services
+4. Run backend and frontend servers locally or deploy to your preferred backend hosting
 
-Users can browse official club merchandise within the app.
-When they tap “Buy,” they are redirected to the official store.
-This lets the platform earn affiliate commission without handling payments.
+---
 
-💬 Match-Day Chat Rooms
 
-Each live match has its own real-time chat space so fans can:
+## 💬 Contact & Contribution
 
-React to goals
+Contributions, issues, and feature requests are welcome!  
+Feel free to check the [issues page](https://github.com/RounakGope/Score-Pulse/issues).
 
-Discuss tactics
+---
 
-Share emotions live
-
-Chat is powered by WebSockets to maintain real-time interaction.
-👥 Club Communities
-
-Users can join their favorite club’s community to:
-
-Share posts
-
-Discuss matches
-
-Stay connected with fellow supporters
-
-This builds long-term engagement beyond match days.
-
-📊 Immersive Match Visualizer (No Video Needed)
-
-To keep fans engaged even without live video:
-
-Event timeline
-
-Lineups & formations
-
-Basic stats
-
-Shot / chance indicators
-
-This ensures chat remains active and match experience feels alive.
-🏗️ Tech Stack (MVP)
-Frontend
-
-Flutter
-
-Riverpod / Bloc
-
-Firebase Notifications
-
-WebSockets for real-time chat
-
-Backend
-
-Spring Boot
-
-JWT Authentication
-
-WebSocket STOMP
-
-PostgreSQL
-
-Redis (optional)
-
-External Services
-
-API-Football (live match & league data)
-
-Affiliate partners (Fanatics, Amazon, club stores)
+*Enjoy the beautiful game with Digital Stadium!*
