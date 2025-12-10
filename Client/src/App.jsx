@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/home.jsx'
+import ChooseClub from './pages/myClubPicker.jsx'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -11,6 +12,7 @@ function App() {
     <>
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/club-choose" element={<ChooseClub />} />
     </Routes>
 
       
