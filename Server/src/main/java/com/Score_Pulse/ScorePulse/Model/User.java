@@ -20,6 +20,7 @@ public class User {
    private String age;
   private   String password;
    private Club favClub;
+   private Country country;
    private List<Club> followingClub;
 
 
