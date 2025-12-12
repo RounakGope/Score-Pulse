@@ -11,8 +11,7 @@ const COMMUNITY_DATA = {
     name: "FC Barcelona",
     logo: "https://media.api-sports.io/football/teams/529.png",
     isMatchLive: true, 
-    // DYNAMIC IMAGE: Only the stadium needs to be specific to the club now
-    stadiumImage: "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=800&q=80" // Camp Nou
+    stadiumImage: "https://images.unsplash.com/photo-1563299796-b729d0af54a5?auto=format&fit=crop&w=800&q=80" 
   },
 
   // The 3 Main Chat Modules
@@ -21,7 +20,6 @@ const COMMUNITY_DATA = {
       id: 'global',
       title: "Global Chat",
       type: "public",
-      // GENERIC IMAGE: Group of fans / Atmosphere
       image: "https://images.unsplash.com/photo-1504159506876-7949514619cd?auto=format&fit=crop&w=800&q=80", 
       description: "Connect with football fans worldwide"
     },
@@ -29,19 +27,24 @@ const COMMUNITY_DATA = {
       id: 'private',
       title: "Private Chat",
       type: "private",
-      // GENERIC IMAGE: Modern Locker Room
-      image: "https://www.fcbarcelona.com/en/news/3004483/fantastic-party-atmosphere-at-the-spotify-camp-nou", 
+      image: "https://images.unsplash.com/photo-1626245648588-e2eb70cf8493?auto=format&fit=crop&w=800&q=80", 
       description: "Exclusive squad discussions"
     },
     {
       id: 'matchday',
       title: "MatchDay Chat",
       type: "live",
-      // Dynamic: set to null here, we will load myClub.stadiumImage in the component
-      image: "https://www.barcelona-tickets.com/camp-nou-tour/camp-nou-facts/", 
+      image: null, // Loads myClub.stadiumImage
       description: "Live reaction zone"
     }
   ],
+
+  // Merchandise Data (NEW)
+  merchPromo: {
+    title: "Get Your Exclusive Merchs!",
+    subtitle: "50% off on orders above $189",
+    image: "https://images.unsplash.com/photo-1522778526097-96a241e57c9e?auto=format&fit=crop&w=1200&q=80", // Jersey/Store image
+  },
 
   // Right Sidebar Data
   worldWideCommunities: [
@@ -60,7 +63,7 @@ const apiService = {
 // ==========================================
 // 2. MAIN COMPONENT
 // ==========================================
-export default function MyCommunity ()  {
+export default function MyCommunity  ()  {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -100,64 +103,87 @@ export default function MyCommunity ()  {
 
         <div className="flex flex-col lg:flex-row gap-12">
           
-          {/* --- LEFT SECTION: CHAT CARDS --- */}
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {data.chatModules.map((chat) => {
-              const isMatchDay = chat.id === 'matchday';
-              const isLocked = isMatchDay && !data.myClub.isMatchLive;
-              
-              // LOGIC: If it's MatchDay, use the Club's Specific Stadium, otherwise use the Generic Image
-              const bgImage = isMatchDay ? data.myClub.stadiumImage : chat.image;
+          {/* --- LEFT SECTION WRAPPER (Chats + Merch) --- */}
+          <div className="flex-1 flex flex-col gap-8">
+            
+            {/* 1. Chat Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {data.chatModules.map((chat) => {
+                const isMatchDay = chat.id === 'matchday';
+                const isLocked = isMatchDay && !data.myClub.isMatchLive;
+                const bgImage = isMatchDay ? data.myClub.stadiumImage : chat.image;
 
-              return (
-                <div 
-                  key={chat.id}
-                  onClick={() => !isLocked && handleNavigation(chat.id)}
-                  className={`
-                    relative h-[500px] rounded-3xl overflow-hidden group border border-neutral-800 transition-all duration-500
-                    ${isLocked ? 'cursor-not-allowed opacity-60 grayscale' : 'cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.1)]'}
-                  `}
-                >
-                  {/* Background Image */}
-                  <img 
-                    src={bgImage} 
-                    alt={chat.title} 
+                return (
+                  <div 
+                    key={chat.id}
+                    onClick={() => !isLocked && handleNavigation(chat.id)}
                     className={`
-                      absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out
-                      ${!isLocked && 'group-hover:scale-110'}
-                    `} 
-                  />
-                  
-                  {/* Dark Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-70"></div>
+                      relative h-[450px] rounded-3xl overflow-hidden group border border-neutral-800 transition-all duration-500
+                      ${isLocked ? 'cursor-not-allowed opacity-60 grayscale' : 'cursor-pointer hover:border-orange-500/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.1)]'}
+                    `}
+                  >
+                    <img 
+                      src={bgImage} 
+                      alt={chat.title} 
+                      className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out ${!isLocked && 'group-hover:scale-110'}`} 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-70 transition-opacity"></div>
 
-                  {/* Status Badges */}
-                  <div className="absolute top-4 right-4">
-                    {isMatchDay && data.myClub.isMatchLive && (
-                       <span className="bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest animate-pulse shadow-lg">
-                         Live
-                       </span>
-                    )}
-                    {isLocked && (
-                       <span className="bg-neutral-800 text-neutral-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-neutral-600">
-                         Offline
-                       </span>
-                    )}
-                  </div>
+                    {/* Status Badges */}
+                    <div className="absolute top-4 right-4">
+                      {isMatchDay && data.myClub.isMatchLive && (
+                         <span className="bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest animate-pulse shadow-lg">Live</span>
+                      )}
+                      {isLocked && (
+                         <span className="bg-neutral-800 text-neutral-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-neutral-600">Offline</span>
+                      )}
+                    </div>
 
-                  {/* Text Content */}
-                  <div className="absolute bottom-0 left-0 p-8 w-full transform transition-transform duration-300 translate-y-2 group-hover:translate-y-0">
-                    <h2 className={`text-2xl font-bold mb-2 ${!isLocked && 'group-hover:text-orange-500'} transition-colors`}>
-                      {chat.title}
-                    </h2>
-                    <p className="text-sm text-neutral-400 font-medium leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75 transform translate-y-4 group-hover:translate-y-0">
-                      {isLocked ? "Chat opens 1 hour before kick-off." : chat.description}
-                    </p>
+                    <div className="absolute bottom-0 left-0 p-8 w-full transform transition-transform duration-300 translate-y-2 group-hover:translate-y-0">
+                      <h2 className={`text-2xl font-bold mb-2 ${!isLocked && 'group-hover:text-orange-500'} transition-colors`}>{chat.title}</h2>
+                      <p className="text-sm text-neutral-400 font-medium leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75 transform translate-y-4 group-hover:translate-y-0">
+                        {isLocked ? "Opens 1h before kick-off." : chat.description}
+                      </p>
+                    </div>
                   </div>
+                );
+              })}
+            </div>
+
+            {/* 2. Merchandise Banner (NEW) */}
+            <div 
+              onClick={() => handleNavigation('merchandise')}
+              className="relative h-48 w-full rounded-3xl overflow-hidden group border border-neutral-800 cursor-pointer hover:border-orange-500/50 transition-all duration-300 shadow-xl"
+            >
+              {/* Background Image */}
+              <img 
+                src={data.merchPromo.image} 
+                alt="Merch" 
+                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 ease-out" 
+              />
+              
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
+
+              {/* Text Content */}
+              <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12">
+                <h2 className="text-3xl md:text-4xl font-light text-white mb-2 tracking-tight group-hover:text-orange-400 transition-colors">
+                  {data.merchPromo.title}
+                </h2>
+                <p className="text-lg text-neutral-300 font-medium">
+                  {data.merchPromo.subtitle.split('189$')[0]} 
+                  <span className="text-orange-500 font-bold">189$</span>
+                </p>
+                
+                {/* Implied Button */}
+                <div className="mt-4 flex items-center text-sm font-bold uppercase tracking-widest text-neutral-400 group-hover:text-white transition-colors gap-2">
+                   Shop Now <span className="transform group-hover:translate-x-1 transition-transform">→</span>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
           </div>
+
 
           {/* --- RIGHT SECTION: SIDEBAR (Community Worldwide) --- */}
           <div className="w-full lg:w-80 flex flex-col gap-6 relative">
@@ -182,9 +208,7 @@ export default function MyCommunity ()  {
                         <span className="text-sm font-semibold text-white">{club.name}</span>
                      </div>
                   </div>
-                  <span className="text-neutral-600 group-hover:text-white transform group-hover:translate-x-1 transition-all">
-                    →
-                  </span>
+                  <span className="text-neutral-600 group-hover:text-white transform group-hover:translate-x-1 transition-all">→</span>
                 </div>
               ))}
               
