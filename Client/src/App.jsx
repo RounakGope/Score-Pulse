@@ -7,6 +7,7 @@ import Home from './pages/home.jsx'
 import ChooseClub from './pages/myClubPicker.jsx'
 import MyClubHome from './pages/myClubHome.jsx'
 import ScorePage from './pages/scorePage.jsx'
+import MyCommunity from './pages/myCommunity'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -19,6 +20,7 @@ function App() {
       <Route path="/myClub" element={<MyClubHome />} />
 
       <Route path="/scorePage" element={<ScorePage />} />
+      <Route path='/myCommunity' element={<MyCommunity/>} />
     </Routes>
 
       
